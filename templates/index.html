@@ -6,6 +6,11 @@
             <input type="text" name="tamanho" placeholder="Digite o tamanho do seu lanche">
             <input type="submit"  value="Enviar">    
         </form>
+            {% if erro == 0 %}
+                <label>Seu pedido número {{ id }} foi realizado com sucesso! Lanche: {{ lanche }} | Tamanho: {{ tamanho }}</label>
+            {% else %}
+                <label>Não foi possivel registrar seu pedido!</label>
+            {% endif %}
         {% endblock %}
     </body>
 </html>

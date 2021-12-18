@@ -4,19 +4,21 @@ from werkzeug.utils import redirect
 
 from model import app, db, PedidoMac
 
-@app.route('/', methods=['POST','GET'])
-@app.route('/index', methods=['POST','GET'])
+@app.route('/')
+@app.route('/index')
 def index():
-    '''if request.method == 'POST':
-        lanche = request.form['lanche']
-        tamanho = request.form['tamanho']
-        return redirect(url_for('cadastrar', lanche=lanche, tamanho=tamanho))
-    else:'''
     return render_template('index.html')
 
-@app.route('/cadastrar')
-def cadastrar(lanche, tamanho):
+@app.route('/cadastrar', methods=['POST'])
+def cadastrar():
+    lanche = request.form.get('lanche')
+    tamanho = request.form.get('tamanho')
     pedidoM = PedidoMac(pedido=lanche, tamanho=tamanho)
-    db.session.add(pedidoM)
-    db.session.commit()
-    return '<h1>Pedido realizado!</h1>'
+    try:
+        db.session.add(pedidoM)
+        db.session.commit()
+        id = db.session.query(PedidoMac).order_by(PedidoMac.id.desc()).first()
+        return render_template('index.html', lanche=lanche, tamanho=tamanho, id=id, erro=0)
+    except:
+        return render_template('index.html', erro=1)
+    
