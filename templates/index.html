@@ -1,0 +1,11 @@
+<html>
+    <body>
+        {% block content %}
+        <form method="post" action="/cadastrar">
+            <input type="text" name="lanche" placeholder="digite seu lanche">
+            <input type="text" name="tamanho" placeholder="Digite o tamanho do seu lanche">
+            <input type="submit"  value="Enviar">    
+        </form>
+        {% endblock %}
+    </body>
+</html>
