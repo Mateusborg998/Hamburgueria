@@ -1,16 +1,35 @@
-<html>
-    <body>
-        {% block content %}
+{% extends 'base.html' %}
+{% block title %}
+    Cadastrar
+{% endblock %}
+
+{% block content %}
+    <br></br>
+    <div class="container">
         <form method="post" action="/cadastrar">
-            <input type="text" name="lanche" placeholder="digite seu lanche">
-            <input type="text" name="tamanho" placeholder="Digite o tamanho do seu lanche">
-            <input type="submit"  value="Enviar">    
+            <div>
+                <label for="inputLanche3">Lanche</label>
+                <input type="text" class="form-control" id="inputLanche3" name="lanche" value="{{ lanche }}">
+            </div>
+            <div>
+                <label for="inputTamanho3" class="">Tamanho</label>
+                <input type="text" class="form-control" id="inputTamanho3" name="tamanho" value="{{ tamanho }}">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary col-2">Cadastrar Pedido</button>
         </form>
-            {% if erro == 0 %}
-                <label>Seu pedido número {{ id }} foi realizado com sucesso! Lanche: {{ lanche }} | Tamanho: {{ tamanho }}</label>
-            {% else %}
-                <label>Não foi possivel registrar seu pedido!</label>
-            {% endif %}
-        {% endblock %}
-    </body>
-</html>
+        <br></br>
+        <form method="post" action="/pesquisar">
+            <label for="inputTamanho3" class="">Pesquisar</label>
+            <div class="container row">
+                <input type="text" class="form-control col-4" id="inputPesquisa3" name="palavra" placeholder="Digite o nº do pedido..." value="{{ pedido }}">
+                <div style="width: 5pt;"></div>
+                <button type="submit" class="btn btn-primary" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
