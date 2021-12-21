@@ -24,7 +24,7 @@ def cadastrar():
         pedidoM = PedidoMac(pedido=pedido, lanche=lanche, tamanho=tamanho)
         db.session.add(pedidoM)
         db.session.commit()
-        return redirect(url_for('listar', lanche=lanche, tamanho=tamanho, pedido=pedido, erro=0))
+        return render_template('index.html', lanche=lanche, tamanho=tamanho, pedido=pedido, erro=0)
     except:
         return render_template('index.html', erro=1)
 
@@ -32,14 +32,17 @@ def cadastrar():
 def pesquisar():
     id = request.form.get('palavra')
     try:
-        pedido = str(db.session.query(PedidoMac.pedido).filter_by(pedido=id).first())
+        # Pesquisa retornando para o index.html foi desativado - 20/12/21 by Mateus
+        '''pedido = str(db.session.query(PedidoMac.pedido).filter_by(pedido=id).first())
         lanche = str(db.session.query(PedidoMac.lanche).filter_by(pedido=id).first())
         tamanho = str(db.session.query(PedidoMac.tamanho).filter_by(pedido=id).first())
-        return render_template('index.html', pedido=pedido[2:pedido.rfind("'")], lanche=lanche[2:lanche.rfind("'")], tamanho=tamanho[2:tamanho.rfind("'")])
+        return render_template('index.html', pedido=pedido[2:pedido.rfind("'")], lanche=lanche[2:lanche.rfind("'")], tamanho=tamanho[2:tamanho.rfind("'")])'''
+        pedidos = db.session.query(PedidoMac).filter_by(pedido=id).all()
+        return render_template('lista.html', pedidos=pedidos)
     except:
         return render_template('index.html', erro=2)
 
-@app.route('/listar', methods=['GET', 'POST'])
+@app.route('/listar', methods=['GET'])
 def listar():
     try:
         pedidos = db.session.query(PedidoMac).all()
