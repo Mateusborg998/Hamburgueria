@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+    Pedidos
+{% endblock %}
+
+{% block content %}
+    <br></br>
+    <div class="container" >
+    {% for pedido in pedidos %}
+        <ul class="list-group"  style="color: black;">
+            <li class="list-group-item" >{{ pedido.id }}</li>
+            <li class="list-group-item" >{{ pedido.pedido }}</li>
+            <li class="list-group-item" >{{ pedido.lanche }}</li>
+            <li class="list-group-item" >{{ pedido.tamanho }}</li>
+            <li class="list-group-item" >
+                <div class="row">
+                    <form method="post" action="/editar">
+                        <button type="submit" class="btn btn-primary col-12">Editar</button>
+                    </form>
+                    <div style="width: 5pt;"></div>
+                    <form method="post" action="/deletar">
+                        <button type="submit" class="btn btn-danger col-12">Excluir</button>
+                    </form>
+                </div>
+            </li>
+            <br>
+        </ul>
+    {% endfor %}
+    </div>
+{% endblock %}
