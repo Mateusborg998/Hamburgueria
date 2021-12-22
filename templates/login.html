@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+    <br></br>
+    <div class="container col-5">
+    {% if erro == 1 %}
+        <div class="alert alert-danger" role="alert">
+            Não foi possivel realizar login!
+        </div>
+    {% endif %}
+        <div style="background-color: white; border-radius: 5px; padding: 20px; color: black; margin-top: 5%;">
+            <form method="post" action="/login">
+                <div>
+                    <label for="inputUsuario3">Usuário</label>
+                    <input type="text" class="form-control" id="inputUsuario3" name="usuario">
+                </div>
+                <div>
+                    <label for="inputSenha3">Senha</label>
+                    <input type="password" class="form-control" id="inputSenha3" name="senha">
+                </div>
+                <br>
+                <button type="submit" class="btn btn-success col-2">Entrar</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
