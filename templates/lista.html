@@ -5,26 +5,70 @@
 
 {% block content %}
     <br></br>
-    <div class="container" >
-    {% for pedido in pedidos %}
-        <ul class="list-group"  style="color: black;">
-            <li class="list-group-item" >{{ pedido.id }}</li>
-            <li class="list-group-item" >{{ pedido.pedido }}</li>
-            <li class="list-group-item" >{{ pedido.lanche }}</li>
-            <li class="list-group-item" >{{ pedido.tamanho }}</li>
-            <li class="list-group-item" >
-                <div class="row">
-                    <form method="post" action="/editar">
-                        <button type="submit" class="btn btn-primary col-12">Editar</button>
-                    </form>
-                    <div style="width: 5pt;"></div>
-                    <form method="post" action="/deletar">
-                        <button type="submit" class="btn btn-danger col-12">Excluir</button>
-                    </form>
-                </div>
-            </li>
-            <br>
-        </ul>
-    {% endfor %}
+    <div class="container">
+        {% if msg == 1 %}
+            <div class="alert alert-success" role="alert">
+                Seu pedido foi alterado com sucesso!
+            </div>
+        {% elif msg == 2 %}
+            <div class="alert alert-success" role="alert">
+                Seu pedido foi excluido com sucesso!
+            </div>
+        {% elif erro == 1 %}
+            <div class="alert alert-danger" role="alert">
+                Não foi possivel editar seu pedido!
+            </div>
+        {% elif erro == 2 %}
+            <div class="alert alert-danger" role="alert">
+                Não foi possivel excluir seu pedido!
+            </div>
+        {% endif %}
+        {% for pedido in pedidos %}
+            <div class="container" >
+                <form method="post" action="/editar">
+                    <div style="background-color: white; border-radius: 5px; padding: 15px; color: black;">
+                        <div class="container row">
+                            <label for="inputId3">ID: {{ pedido.id }}</label>
+                            <input type="hidden" class="form-control" id="inputLanche3" name="id" value="{{ pedido.id }}">
+                            <div style="width: 10pt;" ></div>
+                            <label for="inputPedido3" name="pedido">Pedido: {{ pedido.pedido }}</label>
+                        </div>
+                        <div>
+                            <label for="inputLanche3">Lanche</label>
+                            <!-- <input type="text" class="form-control" id="inputLanche3" name="lanche" value="{{ pedido.lanche }}"> -->
+                            <div class="input-group mb-3">
+                                <select class="custom-select" id="inputGroupSelect03" name="lanche">
+                                  <option selected> {{ pedido.lanche }}</option>
+                                  <option value="Misto Quente">Misto Quente</option>
+                                  <option value="X-Burguer">X-Burguer</option>
+                                  <option value="X-Bacon">X-Bacon</option>
+                                  <option value="X-Costela">X-Costela</option>
+                                  <option value="X-Egg">X-Egg</option>
+                                  <option value="X-Frango">X-Frango</option>
+                                  <option value="X-Tudo">X-Tudo</option>
+                                  <option value="X-Salada">X-Salada</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="inputTamanho3" class="">Tamanho</label>
+                            <!-- <input type="text" class="form-control" id="inputTamanho3" name="tamanho" value="{{ pedido.tamanho }}"> -->
+                            <div class="input-group mb-3">
+                                <select class="custom-select" id="inputGroupSelect03" name="tamanho">
+                                  <option selected>{{ pedido.tamanho }}</option>
+                                  <option value="Pequeno">Pequeno</option>
+                                  <option value="Médio">Médio</option>
+                                  <option value="Grande">Grande</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary col-1" name="editar" value="editar">Editar</button>
+                        <button type="submit" class="btn btn-danger col-1" name="excluir" value="excluir">Excluir</button>
+                    </div>
+                </form>
+                <br>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

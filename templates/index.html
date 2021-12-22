@@ -19,30 +19,40 @@
             Não foi possivel localizar seu pedido!
         </div>
     {% endif %}
-        <form method="post" action="/cadastrar">
-            <div>
-                <label for="inputLanche3">Lanche</label>
-                <input type="text" class="form-control" id="inputLanche3" name="lanche">
-            </div>
-            <div>
-                <label for="inputTamanho3" class="">Tamanho</label>
-                <input type="text" class="form-control" id="inputTamanho3" name="tamanho">
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary col-2">Cadastrar Pedido</button>
-        </form>
-        <br></br>
-        <form method="post" action="/pesquisar">
-            <label for="inputTamanho3" class="">Pesquisar</label>
-            <div class="container row">
-                <input type="text" class="form-control col-4" id="inputPesquisa3" name="palavra" placeholder="Digite o nº do pedido...">
-                <div style="width: 5pt;"></div>
-                <button type="submit" class="btn btn-primary" >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                </button>
-            </div>
-        </form>
+        <div style="background-color: white; border-radius: 5px; padding: 20px; color: black; margin-top: 5%;">
+            <form method="post" action="/cadastrar">
+                <div>
+                    <label for="inputLanche3">Lanche</label>
+                    <!-- <input type="text" class="form-control" id="inputLanche3" name="lanche"> -->
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelect03" name="lanche">
+                        <option selected>Escolha</option>
+                        <option value="Misto Quente">Misto Quente</option>
+                        <option value="X-Burguer">X-Burguer</option>
+                        <option value="X-Bacon">X-Bacon</option>
+                        <option value="X-Costela">X-Costela</option>
+                        <option value="X-Egg">X-Egg</option>
+                        <option value="X-Frango">X-Frango</option>
+                        <option value="X-Tudo">X-Tudo</option>
+                        <option value="X-Salada">X-Salada</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="inputTamanho3" class="">Tamanho</label>
+                    <!-- <input type="" class="form-control" id="inputTamanho3" name="tamanho"> -->
+                    <div class="input-group mb-3">
+                        <select class="custom-select" id="inputGroupSelect03" name="tamanho">
+                        <option selected>Escolha</option>
+                        <option value="Pequeno">Pequeno</option>
+                        <option value="Médio">Médio</option>
+                        <option value="Grande">Grande</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary col-2">Cadastrar Pedido</button>
+            </form>
+        </div>
     </div>
 {% endblock %}

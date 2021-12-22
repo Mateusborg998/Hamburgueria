@@ -1,12 +1,13 @@
 from os import urandom
 import re
 from flask import Flask, render_template, request
-from flask.helpers import url_for
-from werkzeug.utils import redirect
 
 from model import app, db, PedidoMac
 
 @app.route('/')
+def login():
+    return render_template('login.html')
+
 @app.route('/index')
 def index():
     return render_template('index.html')
@@ -16,10 +17,6 @@ def cadastrar():
     lanche = request.form.get('lanche')
     tamanho = request.form.get('tamanho')
     try:
-        # Modelo para gerar o nº do pedido através do ID foi desativado - 19/12/21 by Mateus
-        '''pedido = str(db.session.query(PedidoMac.id).order_by(PedidoMac.id.desc()).first())
-        pedido = pedido[1:pedido.rfind(',')]
-        pedido = int(pedido) + 1'''
         pedido = str(urandom(6).hex())
         pedidoM = PedidoMac(pedido=pedido, lanche=lanche, tamanho=tamanho)
         db.session.add(pedidoM)
@@ -28,21 +25,16 @@ def cadastrar():
     except:
         return render_template('index.html', erro=1)
 
-@app.route('/pesquisar', methods=['POST'])
+@app.route('/pesquisar', methods=['POST', 'GET'])
 def pesquisar():
     id = request.form.get('palavra')
     try:
-        # Pesquisa retornando para o index.html foi desativado - 20/12/21 by Mateus
-        '''pedido = str(db.session.query(PedidoMac.pedido).filter_by(pedido=id).first())
-        lanche = str(db.session.query(PedidoMac.lanche).filter_by(pedido=id).first())
-        tamanho = str(db.session.query(PedidoMac.tamanho).filter_by(pedido=id).first())
-        return render_template('index.html', pedido=pedido[2:pedido.rfind("'")], lanche=lanche[2:lanche.rfind("'")], tamanho=tamanho[2:tamanho.rfind("'")])'''
         pedidos = db.session.query(PedidoMac).filter_by(pedido=id).all()
         return render_template('lista.html', pedidos=pedidos)
     except:
         return render_template('index.html', erro=2)
 
-@app.route('/listar', methods=['GET'])
+@app.route('/listar', methods=['GET', 'POST'])
 def listar():
     try:
         pedidos = db.session.query(PedidoMac).all()
@@ -50,3 +42,33 @@ def listar():
     except:
         return render_template('lista.html', erro=2)
 
+@app.route('/editar', methods=['GET', 'POST'])
+def editar():
+    id = request.form.get('id')
+    pedido = request.form.get('pedido')
+    botaoExcluir = request.form.get('excluir')
+    botaoEditar = request.form.get('editar')
+    lanche = request.form.get('lanche')
+    tamanho = request.form.get('tamanho')
+
+    if botaoEditar == 'editar' and botaoExcluir != 'excluir':
+        try:
+            pedido = db.session.query(PedidoMac).filter_by(id=id).first()
+            pedido.lanche = lanche
+            pedido.tamanho = tamanho
+            db.session.commit()
+            pedidos = db.session.query(PedidoMac).all()
+            return render_template('lista.html', pedidos=pedidos, msg=1)
+        except:
+            pedidos = db.session.query(PedidoMac).all()
+            return render_template('lista.html', pedidos=pedidos, erro=1)   
+    else:
+        try:
+            pedido = db.session.query(PedidoMac).filter_by(id=id).first()
+            db.session.delete(pedido)
+            db.session.commit()
+            pedidos = db.session.query(PedidoMac).all()
+            return render_template('lista.html', pedidos=pedidos, msg=2)
+        except:
+            pedidos = db.session.query(PedidoMac).all()
+            return render_template('lista.html', pedidos=pedidos, erro=2)
