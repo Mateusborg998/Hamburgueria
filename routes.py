@@ -4,11 +4,15 @@ from flask import Flask, render_template, request
 
 from model import app, db, PedidoMac
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def login():
-    return render_template('login.html')
+    return render_template('login.html', off=1)
 
-@app.route('/index')
+@app.route('/registrar', methods=['POST', 'GET'])
+def registrar():
+    return render_template('registrar.html', off=1)
+
+@app.route('/index', methods=['POST', 'GET'])
 def index():
     return render_template('index.html')
 
